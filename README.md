@@ -50,5 +50,6 @@ This project is a **frontend-only academic project**.
 Authentication is simulated using browser localStorage.
 
 ## 👨‍💻 Developed By
-**Shahid Mushtaq**
+**Shahid Mushtaq** |
+
 GitHub: https://github.com/shahid-2153
