@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="fav.png" type="image/x-icon">
+  <title>MiniFlix - Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: rgba(8, 8, 8, 0.89);
+      background-position: center;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+        url(https://assets.nflxext.com/ffe/siteui/vlv3/a1dc92ca-091d-4ca9-a05b-8cd44bbfce6a/f9368347-e982-4856-a5a4-396796381f28/RS-en-20191230-popsignuptwoweeks-perspective_alpha_website_large.jpg);
+      background-size: cover;
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .nav-bar {
+      height: 70px;
+      max-width: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo--img {
+      width: 50%;
+    }
+
+    .logo {
+      float: left;
+      background-color: transparent;
+      margin-left: 20px;
+      padding-top: 60px;
+    }
+
+    .header {
+      min-height: 100vh;
+      width: 100%;
+      margin-top: -100px;
+      background-size: cover;
+      align-items: center;
+      overflow-x: hidden;
+      justify-content: center;
+      display: flex;
+    }
+
+    .box {
+      position: relative;
+      width: 400px;
+      height: 500px;
+      background: transparent;
+      box-shadow: 0 0 5px white;
+      border-radius: 20px;
+      padding: 40px;
+      overflow: hidden;
+    }
+
+    .login-form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .input-field:focus+.input-label {
+      top: -1px;
+      transition: 0.3s ease-in-out;
+    }
+
+    .input-field:not(:placeholder-shown).input-field:not(:focus)+.input-label {
+      top: -6px;
+    }
+
+    h2 {
+      font-size: 30px;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .input-group {
+      position: relative;
+      margin: 30px 0;
+      border-bottom: 2px solid #fff;
+    }
+
+    .input-label {
+      position: absolute;
+      top: 50%;
+      left: 2px;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: #fff;
+      pointer-events: none;
+    }
+
+    .input-group input {
+      width: 320px;
+      height: 40px;
+      font-size: 16px;
+      color: #fff;
+      padding: 0 5px;
+      background: transparent;
+      border: none;
+      outline: none;
+    }
+
+    .input-field:focus~label,
+    .input-field:valid~label {
+      top: 17px;
+    }
+
+    .remember {
+      margin: 0px 0 15px 5px;
+    }
+
+    .remember label {
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .remember label input {
+      accent-color: #e50914;
+      margin-top: 4px;
+    }
+
+    button {
+      position: relative;
+      width: 100%;
+      height: 40px;
+      background-color: #e50914;
+      box-shadow: 0 0 10px #e50914;
+      font-size: 16px;
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 4px;
+      border: none;
+      outline: none;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .sign-up-btn {
+      font-size: 14px;
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .sign-up-btn p {
+      color: #fff;
+    }
+
+    .sign-up-btn p a {
+      color: #e50914;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .sign-up-btn p a:hover {
+      text-decoration: underline;
+    }
+
+    .error-msg {
+      color: red;
+      position: absolute;
+      top: 122%;
+      left: 1.3rem;
+      font-size: 12px;
+    }
+
+    .fa-circle-xmark {
+      color: red;
+      position: absolute;
+      left: 0px;
+      top: 120%;
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+      .nav-bar {
+        padding: 1rem;
+      }
+
+      .logo--img {
+        width: 30%;
+      }
+
+      .logo {
+        margin: 0 0;
+        padding: 0 0;
+      }
+
+      .box {
+        width: 60%;
+        height: 330px;
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+      h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      .input-group {
+        margin: 20px 0;
+      }
+
+      .input-group input {
+        width: 100%;
+        font-size: 14px;
+      }
+
+      .input-label {
+        font-size: 14px;
+      }
+
+      button {
+        font-size: 14px;
+        height: 35px;
+        margin: 0 0;
+      }
+
+      .sign-up-btn {
+        font-size: 12px;
+        margin-top: 20px;
+      }
+
+      .error-msg {
+        font-size: 10px;
+        top: 112%;
+        left: 7%;
+      }
+
+      .fa-circle-xmark {
+        font-size: 10px;
+        top: 112%;
+        left: 0%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav-bar">
+    <div class="logo">
+      <img src="/MINIFLIX-LOGO.png" alt="MiniFlix Logo" class="logo--img">
+    </div>
+  </div>
+  <div class="header">
+    <div class="box">
+      <div class="login-form">
+        <form class="form" id="login-form" onsubmit="return false;">
+          <h2>LOGIN</h2>
+          <div class="input-group">
+            <input type="text" class="input-field" id="username" placeholder=" " />
+            <label class="input-label">Username</label>
+            <i class="fa-regular fa-circle-xmark" id="username-error-icon"></i>
+            <div id="username-error" class="error-msg"></div>
+          </div>
+          <div class="input-group">
+            <input type="password" class="input-field" id="password" placeholder=" " />
+            <label class="input-label">Password</label>
+            <i class="fa-regular fa-circle-xmark" id="password-error-icon"></i>
+            <div id="password-error" class="error-msg"></div>
+          </div>
+          <div class="remember">
+            <input type="checkbox" id="remember-me">
+            <label for="remember-me">Remember me</label>
+          </div>
+          <button type="button" id="login-btn">Login</button>
+          <div class="sign-up-btn">
+            <p>Don't have an account? <a href="/MiniFlix.html" class="sign-up-btn-link">Sign Up</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('login-btn').addEventListener('click', function () {
+      event.preventDefault();
+
+      document.getElementById('username-error').textContent = '';
+      document.getElementById('password-error').textContent = '';
+      hideErrorIcons();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      let error = false;
+
+      if (username === '') {
+        document.getElementById('username-error').textContent = 'Username is Required.';
+        showErrorIcon('username-error-icon');
+        error = true;
+      }
+
+      if (password === '') {
+        document.getElementById('password-error').textContent = 'Password is Required.';
+        showErrorIcon('password-error-icon');
+        error = true;
+      }
+
+      if (!error) {
+        window.location.href = 'Home.html';
+      }
+    });
+
+    function showErrorIcon(iconId) {
+      document.getElementById(iconId).style.display = 'inline';
+    }
+
+    function hideErrorIcons() {
+      const icons = ['username-error-icon', 'password-error-icon'];
+      icons.forEach(iconId => {
+        document.getElementById(iconId).style.display = 'none';
+      });
+    }
+
+    const inputFields = ['username', 'password'];
+    inputFields.forEach(fieldId => {
+      document.getElementById(fieldId).addEventListener('input', function () {
+        const errorElement = document.getElementById(`${fieldId}-error`);
+        if (errorElement.innerText) {
+          errorElement.innerText = '';
+          hideErrorIcon(fieldId);
+        }
+      });
+    });
+
+    function hideErrorIcon(fieldId) {
+      const iconId = fieldId === 'username' ? 'username-error-icon' : 'password-error-icon';
+      document.getElementById(iconId).style.display = 'none';
+    }
+  </script>
+  <script>
+    document.getElementById('login-btn').addEventListener('click', function () {
+
+      // Clear old errors
+      document.getElementById('username-error').textContent = '';
+      document.getElementById('password-error').textContent = '';
+      hideErrorIcons();
+
+      const usernameInput = document.getElementById('username').value.trim();
+      const passwordInput = document.getElementById('password').value.trim();
+
+      // Get stored credentials
+      const storedUsername = localStorage.getItem("username");
+      const storedPassword = localStorage.getItem("password");
+
+      let error = false;
+
+      if (!usernameInput) {
+        document.getElementById('username-error').textContent = 'Username is required';
+        showErrorIcon('username-error-icon');
+        error = true;
+      }
+
+      if (!passwordInput) {
+        document.getElementById('password-error').textContent = 'Password is required';
+        showErrorIcon('password-error-icon');
+        error = true;
+      }
+
+      if (error) return;
+
+      // 🔐 AUTH CHECK
+      if (usernameInput === storedUsername && passwordInput === storedPassword) {
+
+        // Login success
+        localStorage.setItem("username", storedUsername); // session keep
+        window.location.href = "Home.html";
+
+      } else {
+        // Login failed
+        document.getElementById('password-error').textContent = "Invalid username or password";
+        showErrorIcon('password-error-icon');
+      }
+    });
+
+    // Utility functions
+    function showErrorIcon(iconId) {
+      document.getElementById(iconId).style.display = 'inline';
+    }
+
+    function hideErrorIcons() {
+      ['username-error-icon', 'password-error-icon'].forEach(id => {
+        document.getElementById(id).style.display = 'none';
+      });
+    }
+  </script>
+
+</body>
+
+</html>

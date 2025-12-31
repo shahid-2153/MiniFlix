@@ -1,0 +1,14 @@
+# VS Code & Visual Studio
+.vscode/
+.vs/
+
+# Database / cache files
+*.sqlite
+*.sqlite-journal
+
+# Windows shortcut files
+*.lnk
+
+# OS files
+Thumbs.db
+.DS_Store

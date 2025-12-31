@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="fav.png" type="image/x-icon">
+  <title>MiniFlix - Watch Movies, Webseries, Anime Online Free</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+        url(https://assets.nflxext.com/ffe/siteui/vlv3/a1dc92ca-091d-4ca9-a05b-8cd44bbfce6a/f9368347-e982-4856-a5a4-396796381f28/RS-en-20191230-popsignuptwoweeks-perspective_alpha_website_large.jpg);
+    }
+
+    .navbar {
+      display: flex;
+      padding: 0 20px;
+      z-index: 10;
+      justify-content: space-between;
+    }
+
+    .navbar-logo {
+      width: 250px;
+      height: 100%;
+    }
+
+    .logo {
+      width: 100%;
+      height: 100%;
+    }
+
+
+    .login-btn {
+      background-color: #dc030f;
+      border: 1px solid #dc030f;
+      font-size: 20px;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      color: white;
+      margin-top: 40px;
+      margin-right: 20px;
+    }
+
+    .hero {
+      color: white;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: absolute;
+      top: 28%;
+      left: 28%;
+    }
+
+    .hero h1 {
+      font-size: 60px;
+      padding: 0;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin-top: 0%;
+      padding-top: 2%;
+      padding-right: 1%;
+    }
+
+    .email-input {
+      border: none;
+      background: transparent;
+      width: 100%;
+      height: 100%;
+      font-size: x-large;
+      padding-left: 12px;
+    }
+
+    .email-label {
+      position: absolute;
+      top: 30%;
+      left: 2.5%;
+      font-size: large;
+      color: rgb(153, 149, 149);
+    }
+
+    .email-input:focus+.email-label {
+      top: 0.2rem;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    .email-input:not(:placeholder-shown).email-input:not(:focus)+.email-label {
+      font-size: 15px;
+      top: 0.2rem;
+    }
+
+    .form {
+      background-color: white;
+      width: 65%;
+      height: 3.5em;
+      position: relative;
+      margin-top: 1rem;
+      border-radius: 5px;
+    }
+
+    .email-form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .submit-btn {
+      background-color: #dc030f;
+      border: 1px solid #dc030f;
+      font-size: x-large;
+      padding: 0.9rem 2rem;
+      border-radius: 5px;
+      color: white;
+      margin-top: 2rem;
+      margin-bottom: 16px;
+      margin-left: 10px;
+    }
+
+    .email-form {
+      flex-direction: row;
+    }
+
+    .error-msg {
+      color: red;
+      position: absolute;
+      top: 96%;
+      left: 5%;
+    }
+
+    .fa-circle-xmark {
+      color: red;
+      position: absolute;
+      left: 0.2%;
+      top: 110%;
+      display: none;
+      font-size: 18px;
+    }
+
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .navbar-logo {
+        width: 150px;
+      }
+
+      .login-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 18px;
+        border-radius: 6px;
+        margin-top: 20px;
+        margin-right: 12px;
+      }
+
+      .hero {
+        top: 25%;
+        left: 10%;
+        width: 80%;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 48px;
+      }
+
+      .hero p {
+        font-size: 18px;
+      }
+
+      .form {
+        width: 80%;
+        height: 3.2em;
+        margin-top: 7px;
+      }
+
+      .email-input {
+        font-size: large;
+        padding-left: 10px;
+      }
+
+      .submit-btn {
+        font-size: large;
+        height: 3em;
+        padding: 0.5rem 1.5rem;
+        white-space: nowrap;
+        display: inline-block;
+        overflow: hidden;
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .error-msg {
+        top: 91.5%;
+        left: 3.6%;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .navbar {
+        display: flex;
+        padding: 3px 10px;
+        z-index: 10;
+        ;
+        justify-content: space-between
+      }
+
+      .navbar-logo {
+        width: 110px;
+        height: 100%;
+      }
+
+      .login-btn {
+        padding: 5px 10px;
+        border-radius: 5px;
+        margin-top: 17px;
+        margin-right: 5px;
+        font-size: 15px;
+      }
+
+      .hero {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        position: absolute;
+        top: 30%;
+        left: 3.5%;
+      }
+
+      .hero h1 {
+        font-size: 31px;
+      }
+
+      .hero p {
+        font-size: 15px;
+        padding-top: 3px;
+      }
+
+      .email-input {
+        border: none;
+        background: transparent;
+        width: 100%;
+        height: 100%;
+        font-size: large;
+        padding-left: 8px;
+        padding-top: 10px;
+      }
+
+      .email-label {
+        position: absolute;
+        top: 30%;
+        left: 2.5%;
+        font-size: large;
+      }
+
+      .email-input:focus+.email-label {
+        top: 0.2rem;
+        font-size: 15px;
+        transition: 0.3s;
+      }
+
+      .email-input:not(:placeholder-shown).email-input:not(:focus)+.email-label {
+        top: 0.2rem;
+        font-size: 15px;
+      }
+
+      .form {
+        width: 95%;
+        height: 50px;
+        position: relative;
+        margin-top: 5px;
+      }
+
+      .email-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .submit-btn {
+        font-size: 20px;
+        padding: 10px 18px;
+        border-radius: 5px;
+        margin-top: 17px;
+        margin-right: 26px;
+      }
+
+      .login-btn,
+      .submit-btn {
+        cursor: pointer;
+      }
+
+      .error-msg {
+        position: absolute;
+        top: 95.5%;
+        left: 5%;
+      }
+
+      .fa-circle-xmark {
+        position: absolute;
+        left: 0.2%;
+        top: 110%;
+        display: none;
+        font-size: 10px;
+      }
+
+      .error-msg {
+        top: 73.7%;
+        left: 6.3%;
+        font-size: 10px;
+      }
+    }
+  </style>
+
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="navbar-logo">
+        <img src="/MINIFLIX-LOGO.png" alt="logo" class="logo" />
+      </div>
+      <div class="nav-items">
+        <div class="nav-itemn">
+          <button class="login-btn" onclick="location.href='Login.html'">Log In</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1><b>Watch Unlimited Movies, <br>Anime For Free.</b></h1>
+      <p>Ready to watch? Enter your email to create account.</p>
+      <form id="reg-form">
+        <div class="email-form">
+          <div class="form">
+            <input type="email" name="email" id="emailField" class="email-input" placeholder=" " />
+            <label class="email-label">Email Address</label>
+            <i class="fa-regular fa-circle-xmark" id="errorIcon"></i>
+          </div>
+          <button type="submit" class="submit-btn" id="submit-btn">Get Started ></button>
+        </div>
+      </form>
+      <div id="error" class="error-msg"></div>
+    </section>
+  </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('reg-form');
+      const emailField = document.getElementById('emailField');
+      const errorIcon = document.getElementById('errorIcon');
+      const errorDiv = document.getElementById('error');
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        errorIcon.style.display = 'none';
+        errorDiv.style.display = 'none';
+
+        const email = emailField.value.trim();
+        errorDiv.textContent = '';
+
+        if (email === '') {
+          errorIcon.style.display = 'inline';
+          errorDiv.textContent = 'Email Address Required.';
+          errorDiv.style.display = 'block';
+          emailField.focus();
+        } else if (!validateEmail(email)) {
+          errorIcon.style.display = 'inline';
+          errorDiv.textContent = 'Please enter a valid email address.';
+          errorDiv.style.display = 'block';
+          emailField.focus();
+        } else {
+          localStorage.setItem('userEmail', email);
+          window.location.href = 'Register.html';
+        }
+      });
+
+      emailField.addEventListener('input', function () {
+        const email = emailField.value.trim();
+        if (email === '' || !validateEmail(email)) {
+          errorIcon.style.display = 'inline';
+          errorDiv.style.display = 'block';
+        } else {
+          errorIcon.style.display = 'none';
+          errorDiv.style.display = 'none';
+        }
+      });
+
+      function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+      }
+    });
+
+  </script>
+</body>
+
+</html>

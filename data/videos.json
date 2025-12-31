@@ -1,0 +1,55 @@
+{
+    "videos": [
+      {
+        "title": "Avatar",
+        "thumbnail": "/img/AVATAR.jpg",
+        "source": "../TRAILERS/AVATAR.mp4"
+      },
+      {
+        "title": "Avatar",
+        "thumbnail": "/img/AVATAR.jpg",
+        "source": "../TRAILERS/AVATAR.mp4"
+      },
+      {
+        "title": "Avatar",
+        "thumbnail": "/img/AVATAR.jpg",
+        "source": "../TRAILERS/AVATAR.mp4"
+      },
+      {
+        "title": "Ant Man",
+        "thumbnail": "/img/poster movies/Antman.jpg",
+        "source": "../TRAILERS/ANT MAN.mp4"
+      },
+      {
+        "title": "Ant Man",
+        "thumbnail": "/img/poster movies/Antman.jpg",
+        "source": "../TRAILERS/ANT MAN.mp4"
+      },
+      {
+        "title": "Ant Man",
+        "thumbnail": "/img/poster movies/Antman.jpg",
+        "source": "../TRAILERS/ANT MAN.mp4"
+      },
+      {
+        "title": "Ant Man",
+        "thumbnail": "/img/poster movies/Antman.jpg",
+        "source": "../TRAILERS/ANT MAN.mp4"
+      },
+      {
+        "title": "Avenger End Game",
+        "thumbnail": "/img/poster movies/Avenger end game.jpg",
+        "source": "../TRAILERS/AVENGER - END GAME.mp4"
+      },
+      {
+        "title": "Avenger End Game",
+        "thumbnail": "/img/poster movies/Avenger end game.jpg",
+        "source": "../TRAILERS/AVENGER - END GAME.mp4"
+      },
+      {
+        "title": "Avenger End Game",
+        "thumbnail": "/img/poster movies/Avenger end game.jpg",
+        "source": "../TRAILERS/AVENGER - END GAME.mp4"
+      }
+    ]
+  }
+  

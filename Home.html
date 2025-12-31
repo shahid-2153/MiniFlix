@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniFlix</title>
+
+    <link rel="icon" href="fav.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #141414;
+            color: white;
+        }
+
+        /* ================= NAVBAR ================= */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 18px 40px;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+            z-index: 1000;
+        }
+
+        .navbar img {
+            width: 120px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: #e5e5e5;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .nav-right {
+            margin-left: auto;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        #searchBar {
+            background: black;
+            border: 1px solid #555;
+            color: white;
+            padding: 6px 10px;
+        }
+
+        .profile {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 35px;
+            background: #111;
+            padding: 12px;
+            border-radius: 4px;
+            min-width: 160px;
+            z-index: 1000;
+        }
+
+        .profile-menu p {
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .profile-menu a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .profile-menu a:hover {
+            color: #fff;
+        }
+
+
+        /* ================= HERO ================= */
+        .hero {
+            height: 95vh;
+            background: url("/img/poster movies/Avengers big.webp") center/cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right,
+                    rgba(0, 0, 0, 0.9),
+                    rgba(0, 0, 0, 0.4),
+                    rgba(0, 0, 0, 0.9));
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 600px;
+            margin-left: 60px;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .hero-info {
+            color: #bbb;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .hero-desc {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            color: #ddd;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 22px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-play {
+            background: #fff;
+            color: #000;
+        }
+
+        .btn-list {
+            background: rgba(109, 109, 110, 0.7);
+            color: #fff;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+        }
+
+        /* ================= ROW ================= */
+        .row-title {
+            margin: 30px 0 10px 40px;
+            font-size: 22px;
+        }
+
+        .thumbnail-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+
+            padding: 20px 40px;
+        }
+
+        .thumbnail-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .thumbnail {
+            width: 100%;
+            min-width: 220px;
+            max-width: 220px;
+            position: relative;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.15);
+            z-index: 2;
+        }
+
+        /* ================= FOOTER ================= */
+        .footer {
+            background: #000;
+            padding: 50px 40px;
+            margin-top: 60px;
+            color: #757575;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .footer-links a {
+            color: #757575;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <img src="/MINIFLIX-LOGO.png">
+        <nav class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Movies</a>
+            <a href="#">Shows</a>
+            <a href="#">My List</a>
+        </nav>
+        <div class="nav-right">
+            <i class="fas fa-search" id="searchIcon"></i>
+            <input type="text" id="searchBar" placeholder="Search..." style="display:none;">
+
+            <i class="fas fa-bell" id="bellIcon"></i>
+
+
+            <div class="profile">
+                <i class="fas fa-user-circle" id="profileIcon"></i>
+
+                <div class="profile-menu" id="profileMenu">
+                    <p id="profileUsername">Guest</p>
+                    <a href="#" id="logoutBtn">Logout</a>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Avengers: Endgame</h1>
+            <div class="hero-info">⭐ 8.4 • 2019 • Action • Sci-Fi</div>
+            <p class="hero-desc">
+                After the devastating events of Infinity War, the Avengers assemble once more
+                to reverse Thanos’ actions and restore balance to the universe.
+            </p>
+
+            <div class="hero-buttons">
+                <button class="btn btn-play">
+                    <i class="fas fa-play"></i> Play
+                </button>
+                <button class="btn btn-list">
+                    <i class="fas fa-plus"></i> My List
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROW -->
+    <h2 class="row-title">My List</h2>
+    <div class="thumbnail-container" id="thumbnailContainer"></div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>Questions? Contact us.</p>
+
+        <div class="footer-links">
+            <a href="#">FAQ</a>
+            <a href="#">Help Center</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms of Use</a>
+        </div>
+
+        <p>MiniFlix © 2025 — Developed by <strong>Shahid Mushtaq</strong></p>
+    </footer>
+
+    <!-- JS -->
+    <script>
+
+        const searchIcon = document.getElementById("searchIcon");
+        const searchBar = document.getElementById("searchBar");
+
+        searchIcon.addEventListener("click", () => {
+            searchBar.style.display =
+                searchBar.style.display === "block" ? "none" : "block";
+        });
+
+        // Profile dropdown toggle
+        const profileIcon = document.getElementById("profileIcon");
+        const profileMenu = document.getElementById("profileMenu");
+        const profileUsername = document.getElementById("profileUsername");
+        const logoutBtn = document.getElementById("logoutBtn");
+
+        // Get username from localStorage
+        const storedUsername = localStorage.getItem("username");
+
+        // Show username if logged in
+        if (storedUsername) {
+            profileUsername.textContent = storedUsername;
+        } else {
+            // If no user logged in → redirect to login
+            window.location.href = "Login.html";
+        }
+
+        // Toggle profile menu
+        profileIcon.addEventListener("click", () => {
+            profileMenu.style.display =
+                profileMenu.style.display === "block" ? "none" : "block";
+        });
+
+        // Logout logic
+        logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("username"); // clear session
+            window.location.href = "Login.html"; // redirect
+        });
+
+
+
+        document.getElementById("bellIcon").addEventListener("click", () => {
+            alert("No new notifications");
+        });
+
+
+
+        fetch('videos.json')
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById("thumbnailContainer");
+                data.videos.forEach(video => {
+                    const a = document.createElement("a");
+                    a.className = "thumbnail";
+                    a.href = `video-Player.html?video=${encodeURIComponent(video.source)}`;
+
+                    const img = document.createElement("img");
+                    img.src = video.thumbnail;
+
+                    a.appendChild(img);
+                    container.appendChild(a);
+                });
+            });
+    </script>
+
+</body>
+
+</html>

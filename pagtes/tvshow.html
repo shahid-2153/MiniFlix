@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="fav.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniFlix</title>
+    <link rel="stylesheet" href="/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <img src="/MINIFLIX-LOGO.png" alt="MiniFlix Logo">
+        <div class="nav-container">
+            <div class="search-container" id="searchContainer">
+                <span class="search-icon" id="searchIcon">🔍</span>
+                <input type="text" class="search-bar" id="searchBar" placeholder="Search...">
+            </div>
+            <nav class="nav-links">
+                <a href="/Home.html">Home</a>
+                <a href="/pagtes/web.html">WebSeries</a>
+                <a href="/pagtes/movies.html">Movies</a>
+                <a href="/pagtes/animes.html">Anime</a>
+            </nav>
+            <div class="profile-container" id="profileContainer">
+                <a href="javascript:void(0)" onclick="toggleProfileDropdown()">
+                    <i class="fas fa-user-circle" style="font-size: 24px; color: white;"></i>
+                </a>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <p>User Email: user@example.com</p>
+                    <a href="/index.html" class="logout-button">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Slider Section -->
+    <div class="slider-container" id="sliderContainer">
+        <div class="slides" id="slides">
+            <div class="slide">
+                <img src="/MINIFLIX-LOGO.png" alt="Slide 1">
+            </div>
+            <div class="slide">
+                <img src="/MINIFLIX-LOGO.png" alt="Slide 2">
+            </div>
+            <div class="slide">
+                <img src="/MINIFLIX-LOGO.png" alt="Slide 3">
+            </div>
+        </div>
+        <div class="nav-buttons">
+            <button class="nav-button" id="prevButton">❮</button>
+            <button class="nav-button" id="nextButton">❯</button>
+        </div>
+    </div>
+    <br><br>
+    <!-- Thumbnail Section -->
+    <div class="thumbnail-container">
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 1 Thumbnail">
+            <div class="thumbnail-title">Video 1</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 2 Thumbnail">
+            <div class="thumbnail-title">Video 2</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 3 Thumbnail">
+            <div class="thumbnail-title">Video 3</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 4 Thumbnail">
+            <div class="thumbnail-title">Video 4</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 5 Thumbnail">
+            <div class="thumbnail-title">Video 5</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 6 Thumbnail">
+            <div class="thumbnail-title">Video 6</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 7 Thumbnail">
+            <div class="thumbnail-title">Video 7</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 8 Thumbnail">
+            <div class="thumbnail-title">Video 8</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 9 Thumbnail">
+            <div class="thumbnail-title">Video 9</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 10 Thumbnail">
+            <div class="thumbnail-title">Video 10</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 11 Thumbnail">
+            <div class="thumbnail-title">Video 11</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 12 Thumbnail">
+            <div class="thumbnail-title">Video 12</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 13 Thumbnail">
+            <div class="thumbnail-title">Video 13</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 14 Thumbnail">
+            <div class="thumbnail-title">Video 14</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 15 Thumbnail">
+            <div class="thumbnail-title">Video 15</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 16 Thumbnail">
+            <div class="thumbnail-title">Video 16</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 17 Thumbnail">
+            <div class="thumbnail-title">Video 17</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 18 Thumbnail">
+            <div class="thumbnail-title">Video 18</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 19 Thumbnail">
+            <div class="thumbnail-title">Video 19</div>
+        </a>
+        <a class="thumbnail" href="video-Player.html?video=Luffy.mp4">
+            <img src="AVATAR POSTER.jpg" alt="Video 20 Thumbnail">
+            <div class="thumbnail-title">Video 20</div>
+        </a>
+    </div>
+    <br><br><br>
+    <footer class="footer">
+        <div class="footer-container">
+            <!-- Logo Section with Separator -->
+            <div class="footer-logo">
+
+                <img src="/MINIFLIX-LOGO.png " alt="Miniflix Logo">
+            </div>
+
+            <!-- About MiniFlix Section -->
+            <div class="footer-section">
+                <h3>About MiniFlix</h3>
+                <ul>
+                    <li style="margin-top: 45px;">Movies</li>
+
+
+
+                    <li style="margin-top: 20px;">Webseries</li>
+
+
+                    <li style="margin-top: 20px;"> Anime</li>
+
+
+                    <li style="margin-top: 20px; ">TV Shows</li>
+                </ul>
+            </div>
+
+            <!-- Developers Section -->
+            <div class="footer-section">
+                <h3>Developers</h3>
+                <ul>
+                    <li style="margin-top: 45px;">Shahid</li>
+                    <li style="margin-top: 20px;">Mushaib</li>
+                    <li style="margin-top: 20px;">Imran Raja</li>
+                    <li style="margin-top: 20px;">Afaq Zargar</li>
+                </ul>
+            </div>
+
+            <!-- Social Media Section with Developer Links -->
+            <div class="footer-section">
+                <h3>Social Media</h3>
+                <div class="social-icons">
+                    <!-- Shahid -->
+                    <div class="developer-links">
+                        <a id="w" href="https://www.instagram.com/__shahid01?igsh=MXBrdGs1aTlmN2U4" target="_blank">
+                            <img src="/img/download.jpg" alt="Instagram Shahid">
+                        </a>
+                        <a id="x" href="https://wa.me/+917006640090" target="_blank">
+                            <img src="/img/download (1).jpg" alt="WhatsApp Shahid">
+                        </a>
+                    </div>
+                    <!-- Mushaib -->
+                    <div class="developer-links">
+                        <a id="y" href="https://www.instagram.com/optimistic_mushaib007?igsh=MWVyaG84ODd5OTQzNQ=="
+                            target="_blank">
+                            <img src="/img/download.jpg" alt="Instagram Mushaib">
+                        </a>
+                        <a id="z" href="https://wa.me/+918899062737" target="_blank">
+                            <img src="/img/download (1).jpg" alt="WhatsApp Mushaib">
+                        </a>
+                    </div>
+                    <!-- Imran Raja -->
+                    <div class="developer-links">
+                        <a href="https://www.instagram.com/imranraja_43?igsh=MXVsbmo2eDNmZjY2bQ==" target="_blank">
+                            <img src="/img/download.jpg" alt="Instagram Imran Raja">
+                        </a>
+                        <a href="https://wa.me/+916006464818" target="_blank">
+                            <img src="/img/download (1).jpg" alt="WhatsApp Imran Raja">
+                        </a>
+                    </div>
+                    <!-- Afaq Zargar -->
+                    <div class="developer-links">
+                        <a href="https://www.instagram.com/aafaqzar?igsh=MXZtcW4zMDRkaDF3MA==" target="_blank">
+                            <img src="/img/download.jpg" alt="Instagram Afaq Zargar">
+                        </a>
+                        <a href="https://wa.me/+916006551017" target="_blank">
+                            <img src="/img/download (1).jpg" alt="WhatsApp Afaq Zargar">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="/js/home.js"></script>
+</body>
+
+</html>

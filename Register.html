@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="fav.png" type="image/x-icon">
+    <title>MiniiFlix</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0.5;
+            width: 100%;
+            height: 100%;
+        }
+
+        .box {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            border-radius: 4px;
+            padding: 70px;
+            width: 580px;
+            transform: translate(-50%, -50%);
+        }
+
+        .nav-bar {
+            border-bottom: 3px solid #e6e6e6;
+            height: 70px;
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            margin-left: 30px;
+            float: left;
+        }
+
+        .Login-btn {
+            color: white;
+            background-color: #e50914;
+            border-radius: 10px;
+            padding: 5px 15px;
+            font-size: large;
+            margin-left: auto;
+            margin-right: 50px;
+        }
+
+        .header {
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .reg-input {
+            position: relative;
+        }
+
+        label {
+            cursor: default;
+        }
+
+        .box form {
+            margin: 25px 0 65px;
+        }
+
+        form .reg-input {
+            height: 50px;
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .reg-input input {
+            height: 100%;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 1rem;
+            padding-top: 10px;
+            padding-left: 20px;
+            border: 1px solid #ccc;
+        }
+
+        .reg-input label {
+            position: absolute;
+            left: 20px;
+            top: 25%;
+            font-size: 1rem;
+            color: rgb(153, 149, 149);
+        }
+
+        .input:focus+.label-input {
+            top: 0.2rem;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+
+        .input:not(:placeholder-shown).input:not(:focus)+.label-input {
+            top: 0.2rem;
+            font-size: 13px;
+        }
+
+        .Next-btn {
+            width: 100%;
+            padding: 16px 0;
+            font-size: 1.3rem;
+            background: #e50914;
+            color: #fff;
+            font-weight: 500;
+            border-radius: 4px;
+            border: none;
+            outline: none;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: 0.1s ease;
+        }
+
+        .error-msg {
+            color: red;
+            position: absolute;
+            top: 104%;
+            left: 4%;
+            font-size: 13px;
+        }
+
+        .fa-circle-xmark {
+            color: red;
+            position: absolute;
+            left: -0.2%;
+            top: 108%;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-bar">
+        <div class="logo">
+            <img src="/MINIFLIX-LOGO.png" alt="LOGO ERROR" width="40%">
+        </div>
+        <button class="Login-btn" id="login-btn" onclick="location.href='Login.html'">Login In</button>
+    </div>
+    <div class="box">
+        <div class="header">
+            <h2><b>Fill details to complete your registration.</b></h2>
+            <form id="reg-form">
+                <div class="reg-input">
+                    <input type="text" name="usr-id" id="user" class="input" placeholder=" ">
+                    <label for="user" class="label-input" id="username">Create Username</label>
+                    <i class="fa-regular fa-circle-xmark" id="errorIcon"></i>
+                    <div id="user-error" class="error-msg"></div>
+                </div>
+                <div class="reg-input">
+                    <input type="password" name="password" id="pswd" class="input" placeholder=" ">
+                    <label for="password" class="label-input">Password</label>
+                    <i class="fa-regular fa-circle-xmark" id="errorIconPswd"></i>
+                    <div id="pswd-error" class="error-msg"></div>
+                </div>
+                <div class="reg-input">
+                    <input type="password" name="confirmpassword" id="cnfrm-pswd" class="input" placeholder=" ">
+                    <label for="Confirmpassword" class="label-input">Confirm Password</label>
+                    <i class="fa-regular fa-circle-xmark" id="errorIconCnfrmPswd"></i>
+                    <div id="cnfrm-pswd-error" class="error-msg"></div>
+                </div>
+                <button type="submit" class="Next-btn" id="Nxt-btn">Next</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('reg-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            clearErrorMessages();
+
+            const username = document.getElementById('user').value.trim();
+            const password = document.getElementById('pswd').value;
+            const confirmPassword = document.getElementById('cnfrm-pswd').value;
+
+            let valid = true;
+
+            if (!username) {
+                setError('user-error', 'Username is required.', 'user', 'errorIcon');
+                valid = false;
+            } else {
+                hideErrorIcon('errorIcon');
+            }
+
+            const passwordStrength = checkPasswordStrength(password);
+            if (passwordStrength === 'empty') {
+                setError('pswd-error', 'Password is required.', 'pswd', 'errorIconPswd');
+                valid = false;
+            } else if (passwordStrength === 'weak') {
+                setError('pswd-error', 'Password is too weak.', 'pswd', 'errorIconPswd');
+                valid = false;
+            } else {
+                hideErrorIcon('errorIconPswd');
+            }
+
+            if (!confirmPassword) {
+                setError('cnfrm-pswd-error', 'Confirm Password is required.', 'cnfrm-pswd', 'errorIconCnfrmPswd');
+                valid = false;
+            } else if (password && confirmPassword && password !== confirmPassword) {
+                setError('cnfrm-pswd-error', 'Passwords do not match.', 'cnfrm-pswd', 'errorIconCnfrmPswd');
+                valid = false;
+            } else {
+                hideErrorIcon('errorIconCnfrmPswd');
+            }
+
+            if (valid) {
+                // SAVE USER CREDENTIALS
+                localStorage.setItem("username", username);
+                localStorage.setItem("password", password);
+
+                // GO TO OTP PAGE
+                window.location.href = 'OTP.html';
+            }
+        });
+
+        function checkPasswordStrength(password) {
+            if (!password) return 'empty';
+            const strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            return strongPasswordPattern.test(password) ? 'strong' : 'weak';
+        }
+
+        function setError(elementId, message, inputId, iconId) {
+            document.getElementById(elementId).innerText = message;
+            document.getElementById(inputId).style.borderColor = 'red';
+            document.getElementById(iconId).style.display = 'inline';
+        }
+
+        function clearErrorMessages() {
+            const errorElements = ['user-error', 'pswd-error', 'cnfrm-pswd-error'];
+            errorElements.forEach(id => {
+                document.getElementById(id).innerText = '';
+            });
+            hideAllErrorIcons();
+        }
+
+        function hideAllErrorIcons() {
+            const icons = ['errorIcon', 'errorIconPswd', 'errorIconCnfrmPswd'];
+            icons.forEach(iconId => {
+                document.getElementById(iconId).style.display = 'none';
+            });
+        }
+
+        function hideErrorIcon(iconId) {
+            document.getElementById(iconId).style.display = 'none';
+        }
+
+        const fields = ['user', 'pswd', 'cnfrm-pswd'];
+        fields.forEach(fieldId => {
+            document.getElementById(fieldId).addEventListener('input', function () {
+                const errorElement = document.getElementById(`${fieldId}-error`);
+                const iconId = fieldId === 'user' ? 'errorIcon' :
+                    fieldId === 'pswd' ? 'errorIconPswd' : 'errorIconCnfrmPswd';
+
+                if (errorElement.innerText) {
+                    if (fieldId === 'user' && this.value.trim()) {
+                        clearErrorMessage('user-error');
+                        resetBorder('user');
+                        hideErrorIcon(iconId);
+                    } else if (fieldId === 'pswd') {
+                        const passwordStrength = checkPasswordStrength(this.value);
+                        if (passwordStrength !== 'empty' && passwordStrength !== 'weak') {
+                            clearErrorMessage('pswd-error');
+                            resetBorder('pswd');
+                            hideErrorIcon(iconId);
+                        }
+                    } else if (fieldId === 'cnfrm-pswd') {
+                        const password = document.getElementById('pswd').value;
+                        if (this.value === password) {
+                            clearErrorMessage('cnfrm-pswd-error');
+                            resetBorder('cnfrm-pswd');
+                            hideErrorIcon(iconId);
+                        }
+                    }
+                }
+            });
+        });
+
+        function clearErrorMessage(elementId) {
+            document.getElementById(elementId).innerText = '';
+        }
+
+        function resetBorder(inputId) {
+            document.getElementById(inputId).style.borderColor = '';
+        }
+
+    </script>
+</body>
+
+</html>
