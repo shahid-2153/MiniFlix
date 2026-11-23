@@ -114,7 +114,6 @@
         showError("user-error", "A demo account already exists in this browser. Sign in instead.");
         return;
       }
-      const oldUsername = localStorage.getItem("username") || "";
       if (localStorage.getItem("password")) {
         showError("user-error", "An older demo account exists in this browser. Sign in with that account first.");
         return;
