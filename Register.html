@@ -177,126 +177,70 @@
             </form>
         </div>
     </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/assets/js/supabase-client.js"></script>
     <script>
-        document.getElementById('reg-form').addEventListener('submit', function (event) {
-            event.preventDefault();
 
-            clearErrorMessages();
+document.addEventListener("DOMContentLoaded", () => {
+  const supabase = window.supabaseClient;
+  const form = document.getElementById("reg-form");
+  const email = (localStorage.getItem("userEmail") || "").trim();
+  const usernameInput = document.getElementById("user");
+  const passwordInput = document.getElementById("pswd");
+  const confirmInput = document.getElementById("cnfrm-pswd");
+  if (!email) { window.location.replace("MiniFlix.html"); return; }
 
-            const username = document.getElementById('user').value.trim();
-            const password = document.getElementById('pswd').value;
-            const confirmPassword = document.getElementById('cnfrm-pswd').value;
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    clearErrors();
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value;
+    const confirmPassword = confirmInput.value;
+    let valid = true;
+    if (!username) { setError("user-error","Username is required.","user","errorIcon"); valid = false; }
+    if (!password) { setError("pswd-error","Password is required.","pswd","errorIconPswd"); valid = false; }
+    else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password)) {
+      setError("pswd-error","Use 8+ characters with uppercase, lowercase, number and symbol.","pswd","errorIconPswd"); valid = false;
+    }
+    if (!confirmPassword) { setError("cnfrm-pswd-error","Please confirm your password.","cnfrm-pswd","errorIconCnfrmPswd"); valid = false; }
+    else if (password !== confirmPassword) { setError("cnfrm-pswd-error","Passwords do not match.","cnfrm-pswd","errorIconCnfrmPswd"); valid = false; }
+    if (!valid) return;
 
-            let valid = true;
+    const button = document.getElementById("Nxt-btn");
+    button.disabled = true; button.textContent = "Sending code...";
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email, password, options: { data: { display_name: username } }
+      });
+      if (error) throw error;
+      localStorage.setItem("pendingUsername", username);
+      if (data.session) {
+        localStorage.setItem("username", username);
+        localStorage.removeItem("pendingUsername");
+        localStorage.removeItem("userEmail");
+        window.location.href = "Home.html";
+      } else {
+        window.location.href = "OTP.html";
+      }
+    } catch (error) {
+      setError("pswd-error", error.message || "Registration failed. Please try again.", "pswd", "errorIconPswd");
+      button.disabled = false; button.textContent = "Next";
+    }
+  });
 
-            if (!username) {
-                setError('user-error', 'Username is required.', 'user', 'errorIcon');
-                valid = false;
-            } else {
-                hideErrorIcon('errorIcon');
-            }
-
-            const passwordStrength = checkPasswordStrength(password);
-            if (passwordStrength === 'empty') {
-                setError('pswd-error', 'Password is required.', 'pswd', 'errorIconPswd');
-                valid = false;
-            } else if (passwordStrength === 'weak') {
-                setError('pswd-error', 'Password is too weak.', 'pswd', 'errorIconPswd');
-                valid = false;
-            } else {
-                hideErrorIcon('errorIconPswd');
-            }
-
-            if (!confirmPassword) {
-                setError('cnfrm-pswd-error', 'Confirm Password is required.', 'cnfrm-pswd', 'errorIconCnfrmPswd');
-                valid = false;
-            } else if (password && confirmPassword && password !== confirmPassword) {
-                setError('cnfrm-pswd-error', 'Passwords do not match.', 'cnfrm-pswd', 'errorIconCnfrmPswd');
-                valid = false;
-            } else {
-                hideErrorIcon('errorIconCnfrmPswd');
-            }
-
-            if (valid) {
-                // SAVE USER CREDENTIALS
-                localStorage.setItem("username", username);
-                localStorage.setItem("password", password);
-
-                // GO TO OTP PAGE
-                window.location.href = 'OTP.html';
-            }
-        });
-
-        function checkPasswordStrength(password) {
-            if (!password) return 'empty';
-            const strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-            return strongPasswordPattern.test(password) ? 'strong' : 'weak';
-        }
-
-        function setError(elementId, message, inputId, iconId) {
-            document.getElementById(elementId).innerText = message;
-            document.getElementById(inputId).style.borderColor = 'red';
-            document.getElementById(iconId).style.display = 'inline';
-        }
-
-        function clearErrorMessages() {
-            const errorElements = ['user-error', 'pswd-error', 'cnfrm-pswd-error'];
-            errorElements.forEach(id => {
-                document.getElementById(id).innerText = '';
-            });
-            hideAllErrorIcons();
-        }
-
-        function hideAllErrorIcons() {
-            const icons = ['errorIcon', 'errorIconPswd', 'errorIconCnfrmPswd'];
-            icons.forEach(iconId => {
-                document.getElementById(iconId).style.display = 'none';
-            });
-        }
-
-        function hideErrorIcon(iconId) {
-            document.getElementById(iconId).style.display = 'none';
-        }
-
-        const fields = ['user', 'pswd', 'cnfrm-pswd'];
-        fields.forEach(fieldId => {
-            document.getElementById(fieldId).addEventListener('input', function () {
-                const errorElement = document.getElementById(`${fieldId}-error`);
-                const iconId = fieldId === 'user' ? 'errorIcon' :
-                    fieldId === 'pswd' ? 'errorIconPswd' : 'errorIconCnfrmPswd';
-
-                if (errorElement.innerText) {
-                    if (fieldId === 'user' && this.value.trim()) {
-                        clearErrorMessage('user-error');
-                        resetBorder('user');
-                        hideErrorIcon(iconId);
-                    } else if (fieldId === 'pswd') {
-                        const passwordStrength = checkPasswordStrength(this.value);
-                        if (passwordStrength !== 'empty' && passwordStrength !== 'weak') {
-                            clearErrorMessage('pswd-error');
-                            resetBorder('pswd');
-                            hideErrorIcon(iconId);
-                        }
-                    } else if (fieldId === 'cnfrm-pswd') {
-                        const password = document.getElementById('pswd').value;
-                        if (this.value === password) {
-                            clearErrorMessage('cnfrm-pswd-error');
-                            resetBorder('cnfrm-pswd');
-                            hideErrorIcon(iconId);
-                        }
-                    }
-                }
-            });
-        });
-
-        function clearErrorMessage(elementId) {
-            document.getElementById(elementId).innerText = '';
-        }
-
-        function resetBorder(inputId) {
-            document.getElementById(inputId).style.borderColor = '';
-        }
-
+  function setError(e,m,i,icon) {
+    document.getElementById(e).textContent=m;
+    document.getElementById(i).style.borderColor="red";
+    document.getElementById(icon).style.display="inline";
+  }
+  function clearErrors() {
+    ["user-error","pswd-error","cnfrm-pswd-error"].forEach(id=>document.getElementById(id).textContent="");
+    ["user","pswd","cnfrm-pswd"].forEach(id=>document.getElementById(id).style.borderColor="");
+    ["errorIcon","errorIconPswd","errorIconCnfrmPswd"].forEach(id=>document.getElementById(id).style.display="none");
+  }
+});
     </script>
 </body>
 
