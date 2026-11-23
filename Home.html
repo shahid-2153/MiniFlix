@@ -247,6 +247,8 @@
             text-decoration: underline;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/assets/js/supabase-client.js"></script>
 </head>
 
 <body>
@@ -335,16 +337,14 @@
         const profileUsername = document.getElementById("profileUsername");
         const logoutBtn = document.getElementById("logoutBtn");
 
-        // Get username from localStorage
-        const storedUsername = localStorage.getItem("username");
-
-        // Show username if logged in
-        if (storedUsername) {
-            profileUsername.textContent = storedUsername;
-        } else {
-            // If no user logged in → redirect to login
-            window.location.href = "Login.html";
-        }
+        // Confirm the user has a valid Supabase session before showing Home.
+        (async () => {
+            const { data: { session } } = await window.supabaseClient.auth.getSession();
+            if (!session) { window.location.replace("Login.html"); return; }
+            const displayName = session.user.user_metadata?.display_name || session.user.email?.split("@")[0] || "User";
+            profileUsername.textContent = displayName;
+            localStorage.setItem("username", displayName);
+        })();
 
         // Toggle profile menu
         profileIcon.addEventListener("click", () => {
@@ -352,10 +352,12 @@
                 profileMenu.style.display === "block" ? "none" : "block";
         });
 
-        // Logout logic
-        logoutBtn.addEventListener("click", () => {
-            localStorage.removeItem("username"); // clear session
-            window.location.href = "Login.html"; // redirect
+        // Sign out from Supabase and clear the display name.
+        logoutBtn.addEventListener("click", async (event) => {
+            event.preventDefault();
+            await window.supabaseClient.auth.signOut();
+            localStorage.removeItem("username");
+            window.location.href = "Login.html";
         });
 
 
