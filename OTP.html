@@ -107,11 +107,11 @@
             <div class="Logo">
                 <img src="/assets/images/verification-logo_-removebg-preview.png" alt="">
             </div>
-            <h1><b>Great, now let's verify your email id</b></h1>
+            <h1><b>Verify your email address</b></h1>
             <h4>
                 <p id="otp-msg"></p>
             </h4>
-            <div id="inputs" class="inputs">
+            <div id="inputs" class="inputs" style="display:none;">
                 <input class="input" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="1" aria-label="OTP digit 1" />
                 <input class="input" type="text" inputmode="numeric" maxlength="1" aria-label="OTP digit 2" />
                 <input class="input" type="text" inputmode="numeric" maxlength="1" aria-label="OTP digit 3" />
@@ -120,7 +120,7 @@
                 <input class="input" type="text" inputmode="numeric" maxlength="1" aria-label="OTP digit 6" />
             </div>
         </div>
-        <input type="button" value="Submit" class="Done" id="done-btn">
+        <input type="button" value="I have verified my email" class="Done" id="done-btn">
         <button type="button" id="resend-btn" style="display:block;margin:14px auto 0;background:none;border:0;color:#e50914;cursor:pointer;">Resend code</button>
     </div>
     
@@ -130,55 +130,54 @@
     <script>
 
 document.addEventListener("DOMContentLoaded", () => {
-  const supabase=window.supabaseClient;
-  const wrap=document.getElementById("inputs");
-  const inputs=Array.from(wrap.querySelectorAll("input"));
-  const submit=document.getElementById("done-btn");
-  const resend=document.getElementById("resend-btn");
-  const email=(localStorage.getItem("userEmail")||"").trim();
-  const message=document.getElementById("otp-msg");
+  const supabase = window.supabaseClient;
+  const email = (localStorage.getItem("userEmail") || "").trim();
+  const message = document.getElementById("otp-msg");
+  const resend = document.getElementById("resend-btn");
+  const verifyButton = document.getElementById("done-btn");
+
   if (!email) { window.location.replace("MiniFlix.html"); return; }
-  message.textContent="We sent a 6-digit verification code to "+email+".";
-  wrap.addEventListener("input",event=>{
-    const field=event.target;
-    if (!inputs.includes(field)) return;
-    field.value=field.value.replace(/\D/g,"").slice(0,1);
-    if (field.value) inputs[inputs.indexOf(field)+1]?.focus();
+
+  message.textContent = "A verification link has been sent to " + email + ". Open the email and click the link to verify your account. You will then be redirected to MiniFlix.";
+  message.style.color = "#222";
+
+  verifyButton.addEventListener("click", async () => {
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if (error) { show(error.message, true); return; }
+    if (session) {
+      localStorage.removeItem("pendingUsername");
+      localStorage.removeItem("userEmail");
+      window.location.href = "Home.html";
+    } else {
+      show("Please click the verification link in your email first.", true);
+    }
   });
-  wrap.addEventListener("keydown",event=>{
-    if(event.key==="Backspace" && !event.target.value) inputs[inputs.indexOf(event.target)-1]?.focus();
+
+  resend.addEventListener("click", async () => {
+    resend.disabled = true;
+    resend.textContent = "Sending...";
+    const { error } = await supabase.auth.resend({
+      type: "signup",
+      email,
+      options: { emailRedirectTo: window.location.origin + "/Home.html" }
+    });
+    show(error ? error.message : "A new verification email has been sent. Check your inbox and spam folder.", !!error);
+    resend.disabled = false;
+    resend.textContent = "Resend verification email";
   });
-  wrap.addEventListener("paste",event=>{
-    const pasted=(event.clipboardData||window.clipboardData).getData("text").replace(/\D/g,"").slice(0,6);
-    if(!pasted)return;
-    event.preventDefault();
-    inputs.forEach((field,index)=>field.value=pasted[index]||"");
-    inputs[Math.min(pasted.length,5)].focus();
+
+  document.getElementById("log-out-btn").addEventListener("click", () => {
+    localStorage.removeItem("pendingUsername");
+    localStorage.removeItem("userEmail");
+    window.location.href = "MiniFlix.html";
   });
-  submit.addEventListener("click",async()=>{
-    const token=inputs.map(field=>field.value).join("");
-    if(token.length!==6){show("Please enter the complete 6-digit OTP.",true);return;}
-    submit.disabled=true;submit.value="Verifying...";
-    const {data,error}=await supabase.auth.verifyOtp({email,token,type:"signup"});
-    if(error){show(error.message||"Invalid or expired OTP. Try again.",true);submit.disabled=false;submit.value="Submit";return;}
-    const name=localStorage.getItem("pendingUsername")||data.user?.user_metadata?.display_name||email.split("@")[0];
-    localStorage.setItem("username",name);
-    localStorage.removeItem("pendingUsername");localStorage.removeItem("userEmail");
-    window.location.href="Home.html";
-  });
-  resend.addEventListener("click",async()=>{
-    resend.disabled=true;
-    const {error}=await supabase.auth.resend({type:"signup",email});
-    show(error?error.message:"A new verification code has been sent.",!!error);
-    resend.disabled=false;
-  });
-  document.getElementById("log-out-btn").addEventListener("click",()=>{
-    localStorage.removeItem("pendingUsername");localStorage.removeItem("userEmail");
-    window.location.href="MiniFlix.html";
-  });
-  function show(text,isError){message.textContent=text;message.style.color=isError?"red":"green";}
+
+  function show(text, isError) {
+    message.textContent = text;
+    message.style.color = isError ? "red" : "green";
+  }
 });
-    </script>
+
 </body>
 
 </html>
