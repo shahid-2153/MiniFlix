@@ -1,10 +1,55 @@
 {
-  "videos": [
-    { "id": "avatar", "title": "Avatar", "category": "movies", "categoryLabel": "Movie", "thumbnail": "assets/images/AVATAR POSTER.jpg", "source": null },
-    { "id": "ant-man", "title": "Ant-Man", "category": "movies", "categoryLabel": "Movie", "thumbnail": "assets/images/Antman.jpg", "source": null },
-    { "id": "avengers-endgame", "title": "Avengers: Endgame", "category": "movies", "categoryLabel": "Movie", "thumbnail": "assets/images/Avenger end game.jpg", "source": null },
-    { "id": "the-avengers", "title": "The Avengers", "category": "movies", "categoryLabel": "Movie", "thumbnail": "assets/images/Avengers.jpg", "source": null },
-    { "id": "the-dark-knight", "title": "The Dark Knight", "category": "movies", "categoryLabel": "Movie", "thumbnail": "assets/images/Dark night (batman).webp", "source": null },
-    { "id": "iron-man", "title": "Iron Man", "category": "movies", "categoryLabel": "Movie", "thumbnail": "assets/images/Iron man.jpg", "source": null }
-  ]
-}
+    "videos": [
+      {
+        "title": "Avatar",
+        "thumbnail": "/img/AVATAR.jpg",
+        "source": "../TRAILERS/AVATAR.mp4"
+      },
+      {
+        "title": "Avatar",
+        "thumbnail": "/img/AVATAR.jpg",
+        "source": "../TRAILERS/AVATAR.mp4"
+      },
+      {
+        "title": "Avatar",
+        "thumbnail": "/img/AVATAR.jpg",
+        "source": "../TRAILERS/AVATAR.mp4"
+      },
+      {
+        "title": "Ant Man",
+        "thumbnail": "/img/poster movies/Antman.jpg",
+        "source": "../TRAILERS/ANT MAN.mp4"
+      },
+      {
+        "title": "Ant Man",
+        "thumbnail": "/img/poster movies/Antman.jpg",
+        "source": "../TRAILERS/ANT MAN.mp4"
+      },
+      {
+        "title": "Ant Man",
+        "thumbnail": "/img/poster movies/Antman.jpg",
+        "source": "../TRAILERS/ANT MAN.mp4"
+      },
+      {
+        "title": "Ant Man",
+        "thumbnail": "/img/poster movies/Antman.jpg",
+        "source": "../TRAILERS/ANT MAN.mp4"
+      },
+      {
+        "title": "Avenger End Game",
+        "thumbnail": "/img/poster movies/Avenger end game.jpg",
+        "source": "../TRAILERS/AVENGER - END GAME.mp4"
+      },
+      {
+        "title": "Avenger End Game",
+        "thumbnail": "/img/poster movies/Avenger end game.jpg",
+        "source": "../TRAILERS/AVENGER - END GAME.mp4"
+      },
+      {
+        "title": "Avenger End Game",
+        "thumbnail": "/img/poster movies/Avenger end game.jpg",
+        "source": "../TRAILERS/AVENGER - END GAME.mp4"
+      }
+    ]
+  }
+  
