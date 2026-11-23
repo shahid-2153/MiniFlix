@@ -69,7 +69,7 @@
       const email = $("emailField").value.trim().toLowerCase();
       $("error").textContent = "";
       $("errorIcon").style.display = "none";
-      if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         $("error").textContent = "Please enter a valid email address.";
         $("errorIcon").style.display = "inline";
         return;
@@ -98,7 +98,7 @@
         showError("user-error", "Username must contain at least 3 characters.");
         valid = false;
       }
-      if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$/.test(password)) {
+      if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password)) {
         showError("pswd-error", "Use 8+ characters with uppercase, lowercase, a number and a symbol.");
         valid = false;
       }
@@ -115,8 +115,8 @@
         return;
       }
       const oldUsername = localStorage.getItem("username") || "";
-      if (oldUsername && localStorage.getItem("password") && oldUsername.toLowerCase() === username.toLowerCase()) {
-        showError("user-error", "This username belongs to an older demo account. Sign in instead.");
+      if (localStorage.getItem("password")) {
+        showError("user-error", "An older demo account exists in this browser. Sign in with that account first.");
         return;
       }
 
@@ -229,7 +229,7 @@
     inputs.addEventListener("input", event => {
       const input = event.target;
       if (!input.matches("input")) return;
-      input.value = input.value.replace(/\\D/g, "").slice(-1);
+      input.value = input.value.replace(/\D/g, "").slice(-1);
       if (input.value) {
         const next = fields[fields.indexOf(input) + 1];
         if (next) next.focus();
@@ -243,7 +243,7 @@
       }
     });
     inputs.addEventListener("paste", event => {
-      const pasted = (event.clipboardData || window.clipboardData).getData("text").replace(/\\D/g, "").slice(0, 4);
+      const pasted = (event.clipboardData || window.clipboardData).getData("text").replace(/\D/g, "").slice(0, 4);
       if (!pasted) return;
       event.preventDefault();
       fields.forEach((field, index) => { field.value = pasted[index] || ""; });
