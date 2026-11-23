@@ -265,8 +265,8 @@
         <form class="form" id="login-form" onsubmit="return false;">
           <h2>LOGIN</h2>
           <div class="input-group">
-            <input type="text" class="input-field" id="username" placeholder=" " />
-            <label class="input-label">Username</label>
+            <input type="email" class="input-field" id="username" autocomplete="email" placeholder=" " />
+            <label class="input-label">Email Address</label>
             <i class="fa-regular fa-circle-xmark" id="username-error-icon"></i>
             <div id="username-error" class="error-msg"></div>
           </div>
@@ -288,120 +288,47 @@
       </div>
     </div>
   </div>
-  <script>
-    document.getElementById('login-btn').addEventListener('click', function () {
-      event.preventDefault();
+  
+  
 
-      document.getElementById('username-error').textContent = '';
-      document.getElementById('password-error').textContent = '';
-      hideErrorIcons();
 
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/assets/js/supabase-client.js"></script>
+    <script>
 
-      let error = false;
-
-      if (username === '') {
-        document.getElementById('username-error').textContent = 'Username is Required.';
-        showErrorIcon('username-error-icon');
-        error = true;
-      }
-
-      if (password === '') {
-        document.getElementById('password-error').textContent = 'Password is Required.';
-        showErrorIcon('password-error-icon');
-        error = true;
-      }
-
-      if (!error) {
-        window.location.href = 'Home.html';
-      }
-    });
-
-    function showErrorIcon(iconId) {
-      document.getElementById(iconId).style.display = 'inline';
+document.addEventListener("DOMContentLoaded", () => {
+  const supabase = window.supabaseClient;
+  const form = document.getElementById("login-form");
+  const emailInput = document.getElementById("username");
+  const passwordInput = document.getElementById("password");
+  const button = document.getElementById("login-btn");
+  form.addEventListener("submit", event => event.preventDefault());
+  button.addEventListener("click", async () => {
+    const email=emailInput.value.trim(), password=passwordInput.value;
+    document.getElementById("username-error").textContent="";
+    document.getElementById("password-error").textContent="";
+    hideIcons();
+    if (!email) { showError("username-error","Email address is required.","username-error-icon"); return; }
+    if (!password) { showError("password-error","Password is required.","password-error-icon"); return; }
+    button.disabled=true; button.textContent="Logging in...";
+    const { data, error } = await supabase.auth.signInWithPassword({email,password});
+    if (error) {
+      showError("password-error", error.message.includes("Email not confirmed") ? "Please verify your email using the OTP first." : "Invalid email or password.", "password-error-icon");
+      button.disabled=false; button.textContent="Login"; return;
     }
-
-    function hideErrorIcons() {
-      const icons = ['username-error-icon', 'password-error-icon'];
-      icons.forEach(iconId => {
-        document.getElementById(iconId).style.display = 'none';
-      });
-    }
-
-    const inputFields = ['username', 'password'];
-    inputFields.forEach(fieldId => {
-      document.getElementById(fieldId).addEventListener('input', function () {
-        const errorElement = document.getElementById(`${fieldId}-error`);
-        if (errorElement.innerText) {
-          errorElement.innerText = '';
-          hideErrorIcon(fieldId);
-        }
-      });
-    });
-
-    function hideErrorIcon(fieldId) {
-      const iconId = fieldId === 'username' ? 'username-error-icon' : 'password-error-icon';
-      document.getElementById(iconId).style.display = 'none';
-    }
-  </script>
-  <script>
-    document.getElementById('login-btn').addEventListener('click', function () {
-
-      // Clear old errors
-      document.getElementById('username-error').textContent = '';
-      document.getElementById('password-error').textContent = '';
-      hideErrorIcons();
-
-      const usernameInput = document.getElementById('username').value.trim();
-      const passwordInput = document.getElementById('password').value.trim();
-
-      // Get stored credentials
-      const storedUsername = localStorage.getItem("username");
-      const storedPassword = localStorage.getItem("password");
-
-      let error = false;
-
-      if (!usernameInput) {
-        document.getElementById('username-error').textContent = 'Username is required';
-        showErrorIcon('username-error-icon');
-        error = true;
-      }
-
-      if (!passwordInput) {
-        document.getElementById('password-error').textContent = 'Password is required';
-        showErrorIcon('password-error-icon');
-        error = true;
-      }
-
-      if (error) return;
-
-      // 🔐 AUTH CHECK
-      if (usernameInput === storedUsername && passwordInput === storedPassword) {
-
-        // Login success
-        localStorage.setItem("username", storedUsername); // session keep
-        window.location.href = "Home.html";
-
-      } else {
-        // Login failed
-        document.getElementById('password-error').textContent = "Invalid username or password";
-        showErrorIcon('password-error-icon');
-      }
-    });
-
-    // Utility functions
-    function showErrorIcon(iconId) {
-      document.getElementById(iconId).style.display = 'inline';
-    }
-
-    function hideErrorIcons() {
-      ['username-error-icon', 'password-error-icon'].forEach(id => {
-        document.getElementById(id).style.display = 'none';
-      });
-    }
-  </script>
-
+    const name=data.user.user_metadata?.display_name || email.split("@")[0];
+    localStorage.setItem("username",name);
+    window.location.href="Home.html";
+  });
+  function showError(id,message,icon) {
+    document.getElementById(id).textContent=message;
+    document.getElementById(icon).style.display="inline";
+  }
+  function hideIcons() {
+    ["username-error-icon","password-error-icon"].forEach(id=>document.getElementById(id).style.display="none");
+  }
+});
+    </script>
 </body>
 
 </html>
