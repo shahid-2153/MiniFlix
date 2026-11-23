@@ -1,35 +1,58 @@
 # 🎬 MiniFlix
 
-MiniFlix is a Movie Streaming Web Application built using HTML, CSS, JavaScript & Bootstrap.
+MiniFlix is a responsive, frontend-only media catalogue built with HTML, CSS and vanilla JavaScript.
 
-## 🚀 Features
-- User Registration & Login (Frontend)
-- OTP Verification UI
-- Movie & Web Series browsing
-- Dynamic video loading using JSON
-- Responsive Netflix-style UI
-- Profile & Logout system (localStorage)
+## Features
 
-## 🛠️ Technologies Used
-- HTML5
-- CSS3
-- JavaScript (Vanilla)
-- Bootstrap 5
+- Responsive landing, catalogue, category and player pages
+- Demo account registration and sign-in stored in the current browser
+- PBKDF2 password hashing through the browser Web Crypto API
+- Demo verification flow with a clearly labelled on-screen code
+- Search and a browser-local **My List**
+- One JSON catalogue shared by the home page, category pages and player
 
+## Run the project
 
-## 📸 Screenshots
-<img width="1919" height="1072" alt="Screenshot 2025-12-31 184618" src="https://github.com/user-attachments/assets/9a2a085a-6e38-418b-9a28-f92ce29e0fc3" />
-<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/e134f90f-0a40-4e0b-8980-6126c8819830" />
-<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/a05a8913-c30b-46ba-8b9b-f469868d3db1" />
-<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/1b286531-24a8-48b8-ab4a-d7d7ab0d96e0" />
-<img width="1915" height="1075" alt="image" src="https://github.com/user-attachments/assets/57304896-1d1e-42c6-b1ed-0f772f9e57e4" />
+Serve the repository root with a static web server, or deploy it to GitHub Pages, Cloudflare Pages or another static host. The authentication flow uses Web Crypto, so use HTTPS (or localhost) rather than opening the HTML files directly.
 
+## Important limitations
 
-## ⚠️ Note
-This project is a **frontend-only academic project**.  
-Authentication is simulated using browser localStorage.
+This is a learning/demo project, not a production streaming service.
 
-## 👨‍💻 Developed By
-**Shahid Mushtaq**  
+- Registration and sign-in are local to the browser and device. There is no server-side user database or session validation.
+- Passwords are hashed before local storage, but client-side storage can be edited by the user. This does **not** replace secure backend authentication.
+- The verification code is displayed on the page for demonstration. No email is sent.
+- The repository currently contains poster images but no video files. The player will explain when a title's media is missing instead of pretending it can play.
+- No paid streaming catalogue, DRM, payment flow or real notification service is included.
 
-GitHub: https://github.com/shahid-2153
+## Add video files
+
+1. Add your own video file to a folder such as `assets/videos/`.
+2. Open `data/videos.json`.
+3. Set that title's `source` to a repository-relative path, for example `assets/videos/example.mp4`.
+4. Commit and deploy the changes.
+
+Each catalogue item uses this shape:
+
+```json
+{
+  "id": "example-title",
+  "title": "Example Title",
+  "category": "movies",
+  "categoryLabel": "Movie",
+  "thumbnail": "assets/images/AVATAR.jpg",
+  "source": "assets/videos/example.mp4"
+}
+```
+
+## Main structure
+
+- `index.html` — loading screen and entry point
+- `MiniFlix.html` — landing and sign-up email form
+- `Register.html`, `OTP.html`, `Login.html` — demo account flow
+- `Home.html` — main catalogue
+- `pagtes/` — category pages
+- `Video-Player.html` — HTML5 media player
+- `assets/js/app.js` — shared authentication, catalogue and player logic
+- `assets/css/home.css` — shared catalogue styling
+- `data/videos.json` — title metadata and media paths
