@@ -126,14 +126,18 @@
     window.addEventListener("load", () => {
       const loaderOverlay = document.getElementById("loaderOverlay");
 
+      // The load event fires only after this page's required resources
+      // (including the logo) have finished loading on the visitor's network.
+      // A tiny pause keeps the animation perceptible on very fast connections.
       setTimeout(() => {
         loaderOverlay.classList.add("fade-out");
-      }, 4000);
 
-      setTimeout(() => {
-        window.location.href = "MiniFlix.html";
-      }, 5400);
-    });
+        // Wait for the existing CSS fade transition to finish before redirecting.
+        setTimeout(() => {
+          window.location.replace("MiniFlix.html");
+        }, 1400);
+      }, 250);
+    }, { once: true });
 
     const loadingText = document.getElementById('loadingText');
     let dotCount = 1;
