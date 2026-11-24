@@ -17,8 +17,8 @@
     body {
       background-color: rgba(8, 8, 8, 0.89);
       background-position: center;
-      background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-        url(https://assets.nflxext.com/ffe/siteui/vlv3/a1dc92ca-091d-4ca9-a05b-8cd44bbfce6a/f9368347-e982-4856-a5a4-396796381f28/RS-en-20191230-popsignuptwoweeks-perspective_alpha_website_large.jpg);
+      background-image: radial-gradient(ellipse at 50% 35%, rgba(229, 9, 20, 0.18), transparent 55%), linear-gradient(135deg, #080808 0%, #171717 52%, #090909 100%);
+      background-size: cover;
       background-size: cover;
       min-height: 100vh;
       justify-content: center;
@@ -283,6 +283,7 @@
           <button type="button" id="login-btn">Login</button>
           <div class="sign-up-btn">
             <p>Don't have an account? <a href="/MiniFlix.html" class="sign-up-btn-link">Sign Up</a></p>
+            <p style="font-size:12px;color:#bbb;margin-top:14px;">Independent MiniFlix project · <a href="/Privacy.html" style="color:#fff;">Privacy</a></p>
           </div>
         </form>
       </div>
@@ -313,7 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
     button.disabled=true; button.textContent="Logging in...";
     const { data, error } = await supabase.auth.signInWithPassword({email,password});
     if (error) {
-      showError("password-error", error.message.includes("Email not confirmed") ? "Please verify your email using the OTP first." : "Invalid email or password.", "password-error-icon");
+      showError("password-error", error.message.includes("Email not confirmed") ? "Please verify your email using the link sent to your inbox." : "Invalid email or password.", "password-error-icon");
       button.disabled=false; button.textContent="Login"; return;
     }
     const name=data.user.user_metadata?.display_name || email.split("@")[0];
