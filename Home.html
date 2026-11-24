@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MiniFlix</title>
 
-    <link rel="icon" href="/assets/images/fav.png">
+    <link rel="icon" href="fav.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
@@ -19,11 +19,6 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
             background-color: #141414;
-            background-image: radial-gradient(ellipse at 50% 35%, rgba(229, 9, 20, 0.16), transparent 55%), linear-gradient(135deg, #080808 0%, #171717 52%, #090909 100%);
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
             color: white;
         }
 
@@ -246,15 +241,13 @@
             text-decoration: underline;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="/assets/js/supabase-client.js"></script>
 </head>
 
 <body>
 
     <!-- NAVBAR -->
     <header class="navbar">
-        <img src="/assets/images/MINIFLIX-LOGO.png">
+        <img src="/MINIFLIX-LOGO.png">
         <nav class="nav-links">
             <a href="#">Home</a>
             <a href="#">Movies</a>
@@ -307,13 +300,13 @@
 
     <!-- FOOTER -->
     <footer class="footer">
-        <p>MiniFlix is an independent media catalogue project, not affiliated with Netflix or other streaming services.</p>
+        <p>Questions? Contact us.</p>
 
         <div class="footer-links">
             <a href="#">FAQ</a>
             <a href="#">Help Center</a>
-            <a href="Privacy.html">Privacy</a>
-            <a href="Privacy.html#project">About MiniFlix</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms of Use</a>
         </div>
 
         <p>MiniFlix © 2025 — Developed by <strong>Shahid Mushtaq</strong></p>
@@ -336,14 +329,16 @@
         const profileUsername = document.getElementById("profileUsername");
         const logoutBtn = document.getElementById("logoutBtn");
 
-        // Confirm the user has a valid Supabase session before showing Home.
-        (async () => {
-            const { data: { session } } = await window.supabaseClient.auth.getSession();
-            if (!session) { window.location.replace("Login.html"); return; }
-            const displayName = session.user.user_metadata?.display_name || session.user.email?.split("@")[0] || "User";
-            profileUsername.textContent = displayName;
-            localStorage.setItem("username", displayName);
-        })();
+        // Get username from localStorage
+        const storedUsername = localStorage.getItem("username");
+
+        // Show username if logged in
+        if (storedUsername) {
+            profileUsername.textContent = storedUsername;
+        } else {
+            // If no user logged in → redirect to login
+            window.location.href = "Login.html";
+        }
 
         // Toggle profile menu
         profileIcon.addEventListener("click", () => {
@@ -351,12 +346,10 @@
                 profileMenu.style.display === "block" ? "none" : "block";
         });
 
-        // Sign out from Supabase and clear the display name.
-        logoutBtn.addEventListener("click", async (event) => {
-            event.preventDefault();
-            await window.supabaseClient.auth.signOut();
-            localStorage.removeItem("username");
-            window.location.href = "Login.html";
+        // Logout logic
+        logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("username"); // clear session
+            window.location.href = "Login.html"; // redirect
         });
 
 
