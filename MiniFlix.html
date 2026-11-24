@@ -2,9 +2,12 @@
 <html lang="en">
 
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MiniFlix is an independent media catalogue project for browsing movies, anime and series.">
+  <meta name="theme-color" content="#101010">
   <link rel="icon" href="/assets/images/fav.png" type="image/x-icon">
-  <title>MiniFlix - Watch Movies, Webseries, Anime Online Free</title>
+  <title>MiniFlix — Independent Media Catalogue</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
   <style>
     * {
@@ -15,8 +18,11 @@
 
     body {
       font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-      background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-        url(https://assets.nflxext.com/ffe/siteui/vlv3/a1dc92ca-091d-4ca9-a05b-8cd44bbfce6a/f9368347-e982-4856-a5a4-396796381f28/RS-en-20191230-popsignuptwoweeks-perspective_alpha_website_large.jpg);
+      background-color: #101010;
+      background-image: radial-gradient(ellipse at 50% 38%, rgba(229, 9, 20, 0.22), transparent 55%), linear-gradient(135deg, #080808 0%, #171717 52%, #090909 100%);
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
     }
 
     .navbar {
@@ -323,6 +329,7 @@
       }
     }
   </style>
+</head>
 
 <body>
   <header>
@@ -340,8 +347,8 @@
 
   <main>
     <section class="hero">
-      <h1><b>Watch Unlimited Movies, <br>Anime For Free.</b></h1>
-      <p>Ready to watch? Enter your email to create account.</p>
+      <h1><b>Explore Movies, <br>Anime &amp; Series.</b></h1>
+      <p>Discover titles in the MiniFlix independent media catalogue.</p>
       <form id="reg-form">
         <div class="email-form">
           <div class="form">
@@ -349,12 +356,13 @@
             <label class="email-label">Email Address</label>
             <i class="fa-regular fa-circle-xmark" id="errorIcon"></i>
           </div>
-          <button type="submit" class="submit-btn" id="submit-btn">Get Started ></button>
+          <button type="submit" class="submit-btn" id="submit-btn">Create Account ></button>
         </div>
       </form>
       <div id="error" class="error-msg"></div>
     </section>
   </main>
+  <footer style="position:fixed;bottom:12px;left:0;width:100%;text-align:center;color:#c7c7c7;font:13px Arial,sans-serif;padding:0 12px;">MiniFlix is an independent personal project and is not affiliated with Netflix or any other streaming service. <a href="Privacy.html" style="color:#fff;text-decoration:underline;">Privacy</a></footer>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.getElementById('reg-form');
