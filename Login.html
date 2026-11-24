@@ -3,7 +3,7 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/assets/images/fav.png" type="image/x-icon">
+  <link rel="icon" href="fav.png" type="image/x-icon">
   <title>MiniFlix - Login</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
   <style>
@@ -17,8 +17,8 @@
     body {
       background-color: rgba(8, 8, 8, 0.89);
       background-position: center;
-      background-image: radial-gradient(ellipse at 50% 35%, rgba(229, 9, 20, 0.18), transparent 55%), linear-gradient(135deg, #080808 0%, #171717 52%, #090909 100%);
-      background-size: cover;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+        url(https://assets.nflxext.com/ffe/siteui/vlv3/a1dc92ca-091d-4ca9-a05b-8cd44bbfce6a/f9368347-e982-4856-a5a4-396796381f28/RS-en-20191230-popsignuptwoweeks-perspective_alpha_website_large.jpg);
       background-size: cover;
       min-height: 100vh;
       justify-content: center;
@@ -256,7 +256,7 @@
 <body>
   <div class="nav-bar">
     <div class="logo">
-      <img src="/assets/images/MINIFLIX-LOGO.png" alt="MiniFlix Logo" class="logo--img">
+      <img src="/MINIFLIX-LOGO.png" alt="MiniFlix Logo" class="logo--img">
     </div>
   </div>
   <div class="header">
@@ -265,8 +265,8 @@
         <form class="form" id="login-form" onsubmit="return false;">
           <h2>LOGIN</h2>
           <div class="input-group">
-            <input type="email" class="input-field" id="username" autocomplete="email" placeholder=" " />
-            <label class="input-label">Email Address</label>
+            <input type="text" class="input-field" id="username" placeholder=" " />
+            <label class="input-label">Username</label>
             <i class="fa-regular fa-circle-xmark" id="username-error-icon"></i>
             <div id="username-error" class="error-msg"></div>
           </div>
@@ -283,53 +283,125 @@
           <button type="button" id="login-btn">Login</button>
           <div class="sign-up-btn">
             <p>Don't have an account? <a href="/MiniFlix.html" class="sign-up-btn-link">Sign Up</a></p>
-            <p style="font-size:12px;color:#bbb;margin-top:14px;">Independent MiniFlix project · <a href="/Privacy.html" style="color:#fff;">Privacy</a></p>
           </div>
         </form>
       </div>
     </div>
   </div>
-  
-  
+  <script>
+    document.getElementById('login-btn').addEventListener('click', function () {
+      event.preventDefault();
 
+      document.getElementById('username-error').textContent = '';
+      document.getElementById('password-error').textContent = '';
+      hideErrorIcons();
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="/assets/js/supabase-client.js"></script>
-    <script>
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
 
-document.addEventListener("DOMContentLoaded", () => {
-  const supabase = window.supabaseClient;
-  const form = document.getElementById("login-form");
-  const emailInput = document.getElementById("username");
-  const passwordInput = document.getElementById("password");
-  const button = document.getElementById("login-btn");
-  form.addEventListener("submit", event => event.preventDefault());
-  button.addEventListener("click", async () => {
-    const email=emailInput.value.trim(), password=passwordInput.value;
-    document.getElementById("username-error").textContent="";
-    document.getElementById("password-error").textContent="";
-    hideIcons();
-    if (!email) { showError("username-error","Email address is required.","username-error-icon"); return; }
-    if (!password) { showError("password-error","Password is required.","password-error-icon"); return; }
-    button.disabled=true; button.textContent="Logging in...";
-    const { data, error } = await supabase.auth.signInWithPassword({email,password});
-    if (error) {
-      showError("password-error", error.message.includes("Email not confirmed") ? "Please verify your email using the link sent to your inbox." : "Invalid email or password.", "password-error-icon");
-      button.disabled=false; button.textContent="Login"; return;
+      let error = false;
+
+      if (username === '') {
+        document.getElementById('username-error').textContent = 'Username is Required.';
+        showErrorIcon('username-error-icon');
+        error = true;
+      }
+
+      if (password === '') {
+        document.getElementById('password-error').textContent = 'Password is Required.';
+        showErrorIcon('password-error-icon');
+        error = true;
+      }
+
+      if (!error) {
+        window.location.href = 'Home.html';
+      }
+    });
+
+    function showErrorIcon(iconId) {
+      document.getElementById(iconId).style.display = 'inline';
     }
-    const name=data.user.user_metadata?.display_name || email.split("@")[0];
-    localStorage.setItem("username",name);
-    window.location.href="Home.html";
-  });
-  function showError(id,message,icon) {
-    document.getElementById(id).textContent=message;
-    document.getElementById(icon).style.display="inline";
-  }
-  function hideIcons() {
-    ["username-error-icon","password-error-icon"].forEach(id=>document.getElementById(id).style.display="none");
-  }
-});
-    </script>
+
+    function hideErrorIcons() {
+      const icons = ['username-error-icon', 'password-error-icon'];
+      icons.forEach(iconId => {
+        document.getElementById(iconId).style.display = 'none';
+      });
+    }
+
+    const inputFields = ['username', 'password'];
+    inputFields.forEach(fieldId => {
+      document.getElementById(fieldId).addEventListener('input', function () {
+        const errorElement = document.getElementById(`${fieldId}-error`);
+        if (errorElement.innerText) {
+          errorElement.innerText = '';
+          hideErrorIcon(fieldId);
+        }
+      });
+    });
+
+    function hideErrorIcon(fieldId) {
+      const iconId = fieldId === 'username' ? 'username-error-icon' : 'password-error-icon';
+      document.getElementById(iconId).style.display = 'none';
+    }
+  </script>
+  <script>
+    document.getElementById('login-btn').addEventListener('click', function () {
+
+      // Clear old errors
+      document.getElementById('username-error').textContent = '';
+      document.getElementById('password-error').textContent = '';
+      hideErrorIcons();
+
+      const usernameInput = document.getElementById('username').value.trim();
+      const passwordInput = document.getElementById('password').value.trim();
+
+      // Get stored credentials
+      const storedUsername = localStorage.getItem("username");
+      const storedPassword = localStorage.getItem("password");
+
+      let error = false;
+
+      if (!usernameInput) {
+        document.getElementById('username-error').textContent = 'Username is required';
+        showErrorIcon('username-error-icon');
+        error = true;
+      }
+
+      if (!passwordInput) {
+        document.getElementById('password-error').textContent = 'Password is required';
+        showErrorIcon('password-error-icon');
+        error = true;
+      }
+
+      if (error) return;
+
+      // 🔐 AUTH CHECK
+      if (usernameInput === storedUsername && passwordInput === storedPassword) {
+
+        // Login success
+        localStorage.setItem("username", storedUsername); // session keep
+        window.location.href = "Home.html";
+
+      } else {
+        // Login failed
+        document.getElementById('password-error').textContent = "Invalid username or password";
+        showErrorIcon('password-error-icon');
+      }
+    });
+
+    // Utility functions
+    function showErrorIcon(iconId) {
+      document.getElementById(iconId).style.display = 'inline';
+    }
+
+    function hideErrorIcons() {
+      ['username-error-icon', 'password-error-icon'].forEach(id => {
+        document.getElementById(id).style.display = 'none';
+      });
+    }
+  </script>
+
 </body>
 
 </html>
